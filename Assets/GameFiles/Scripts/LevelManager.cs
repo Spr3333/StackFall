@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     public GameObject[] model;
+    public Transform parent;
 
     [HideInInspector]
     public GameObject[] prefabModel = new GameObject[4];
@@ -12,16 +14,20 @@ public class LevelManager : MonoBehaviour
 
     private GameObject temp1, temp2;
 
-    private int level = 1, addOn = 7;
+    public int level = 1;
+    private int addOn = 7;
     private float i = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        level = PlayerPrefs.GetInt("Level", 1);
+
         if (level > 9)
             addOn = 0;
 
         ModelSelection();
+        float random = Random.value;
 
         for (i = 0; i > -level - addOn; i -= .5f)
         {
@@ -36,6 +42,19 @@ public class LevelManager : MonoBehaviour
 
             temp1.transform.position = new Vector3(0, i - 0.01f, 0);
             temp1.transform.eulerAngles = new Vector3(0, i * 8, 0);
+            if (Mathf.Abs(i) >= level * .3f && Mathf.Abs(i) <= level * .6f)
+            {
+                temp1.transform.eulerAngles = new Vector3(0, i * 8, 0);
+                temp1.transform.eulerAngles += Vector3.up * 180;
+            }
+            else if (Mathf.Abs(i) >= level * .8f)
+            {
+                temp1.transform.eulerAngles = new Vector3(0, i * 8, 0);
+                if (random > .75)
+                    temp1.transform.eulerAngles += Vector3.up * 180;
+            }
+
+            temp1.transform.SetParent(parent);
         }
 
         temp2 = Instantiate(winPrefab);
@@ -70,5 +89,11 @@ public class LevelManager : MonoBehaviour
                 break;
 
         }
+    }
+
+    public void NextLevel()
+    {
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
+        SceneManager.LoadScene(0);
     }
 }

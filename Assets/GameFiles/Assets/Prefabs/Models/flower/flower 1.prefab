@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5960452819306148684}
   - component: {fileID: 5644796242075715515}
   - component: {fileID: 5454841249393017064}
+  - component: {fileID: 8639832814497114715}
   m_Layer: 0
   m_Name: 4
   m_TagString: enemy
@@ -134,6 +135,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8639832814497114715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960452819303886210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5960452819303886216
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +160,7 @@ GameObject:
   - component: {fileID: 5960452819306148682}
   - component: {fileID: 5747714696003695445}
   - component: {fileID: 6082912173079370697}
+  - component: {fileID: 6917952098922395587}
   m_Layer: 0
   m_Name: 1
   m_TagString: plane
@@ -268,6 +282,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6917952098922395587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960452819303886216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5960452819303886218
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5960452819303723434}
+  - component: {fileID: 2922453503093076130}
   m_Layer: 0
   m_Name: flower 1
   m_TagString: Untagged
@@ -303,6 +330,23 @@ Transform:
   - {fileID: 5960452819303723426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2922453503093076130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960452819303886218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfb279ad54530043a50c72b220f7863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackPartColntrols:
+  - {fileID: 6917952098922395587}
+  - {fileID: 5874847346227478764}
+  - {fileID: 1252739716855995426}
+  - {fileID: 8639832814497114715}
 --- !u!1 &5960452819303886220
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +360,7 @@ GameObject:
   - component: {fileID: 5960452819306148686}
   - component: {fileID: 5560751328029266858}
   - component: {fileID: 7109531940133235694}
+  - component: {fileID: 1252739716855995426}
   m_Layer: 0
   m_Name: 3
   m_TagString: enemy
@@ -437,6 +482,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1252739716855995426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960452819303886220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5960452819303886222
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +507,7 @@ GameObject:
   - component: {fileID: 5960452819306148680}
   - component: {fileID: 4428256721239157924}
   - component: {fileID: 2075223887167192125}
+  - component: {fileID: 5874847346227478764}
   m_Layer: 0
   m_Name: 2
   m_TagString: enemy
@@ -571,3 +629,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5874847346227478764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960452819303886222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

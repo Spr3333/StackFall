@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1033941883887668291}
+  - component: {fileID: 1685048901068082066}
   m_Layer: 0
   m_Name: square 0
   m_TagString: Untagged
@@ -35,6 +36,23 @@ Transform:
   - {fileID: 1033941883887668301}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1685048901068082066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033941883887439971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfb279ad54530043a50c72b220f7863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackPartColntrols:
+  - {fileID: 7334968142847223883}
+  - {fileID: 7233771867509975551}
+  - {fileID: 5226053192439805851}
+  - {fileID: 7537075638636508193}
 --- !u!1 &1033941883887439977
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,6 +66,7 @@ GameObject:
   - component: {fileID: 1033941883889438377}
   - component: {fileID: 7507332964273690277}
   - component: {fileID: 4001929632092030422}
+  - component: {fileID: 7233771867509975551}
   m_Layer: 0
   m_Name: 2
   m_TagString: enemy
@@ -169,6 +188,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7233771867509975551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033941883887439977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1033941883887439979
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +213,7 @@ GameObject:
   - component: {fileID: 1033941883889438379}
   - component: {fileID: 6163813546276673054}
   - component: {fileID: 8219308415405758678}
+  - component: {fileID: 7334968142847223883}
   m_Layer: 0
   m_Name: 1
   m_TagString: enemy
@@ -303,6 +335,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7334968142847223883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033941883887439979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1033941883887439981
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +360,7 @@ GameObject:
   - component: {fileID: 1033941883889438381}
   - component: {fileID: 1123868000058495125}
   - component: {fileID: 3837224501530486289}
+  - component: {fileID: 7537075638636508193}
   m_Layer: 0
   m_Name: 4
   m_TagString: enemy
@@ -437,6 +482,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7537075638636508193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033941883887439981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1033941883887439983
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +507,7 @@ GameObject:
   - component: {fileID: 1033941883889438383}
   - component: {fileID: 3859267663441740023}
   - component: {fileID: 7843903605850338464}
+  - component: {fileID: 5226053192439805851}
   m_Layer: 0
   m_Name: 3
   m_TagString: enemy
@@ -571,3 +629,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5226053192439805851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033941883887439983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6a1e391fdf9204792477d4c1813328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

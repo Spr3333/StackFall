@@ -8,7 +8,19 @@ public class PlayerController : MonoBehaviour
     [Header("Refrences")]
     private Rigidbody rb;
 
-    private bool smash;
+    private float currentTime;
+
+    private bool smash, invincible;
+
+    public enum PlayerState
+    {
+        Preperation,
+        Playing,
+        Dead,
+        Finish
+    }
+
+    public PlayerState state = PlayerState.Preperation;
 
     // Start is called before the first frame update
     void Start()
@@ -19,24 +31,68 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Debug.Log(state);
+        if (state == PlayerState.Playing)
         {
-            smash = true;
+            if (Input.GetMouseButtonDown(0))
+            {
+                smash = true;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                smash = false;
+            }
+
+            if (invincible)
+            {
+                currentTime -= Time.deltaTime * .35f;
+            }
+            else
+            {
+                if (smash)
+                    currentTime += Time.deltaTime * .8f;
+                else
+                    currentTime -= Time.deltaTime * .5f;
+
+            }
+
+            if (currentTime >= 1)
+            {
+                currentTime = 1;
+                invincible = true;
+            }
+            else if (currentTime <= 0)
+            {
+                currentTime = 0;
+                invincible = false;
+            }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (state == PlayerState.Preperation)
         {
-            smash = false;
+            if (Input.GetMouseButtonDown(0))
+            {
+                state = PlayerState.Playing;
+            }
         }
 
+        if (state == PlayerState.Finish)
+        {
+            if (Input.GetMouseButtonDown(0))
+                FindObjectOfType<LevelManager>().NextLevel();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetMouseButton(0))
+        if ((state == PlayerState.Playing))
         {
-            smash = true;
-            rb.velocity = new Vector3(0, -100 * Time.fixedDeltaTime * 7, 0);
+            if (Input.GetMouseButton(0))
+            {
+                smash = true;
+                rb.velocity = new Vector3(0, -100 * Time.fixedDeltaTime * 7, 0);
+            }
         }
 
         if (rb.velocity.y > 5)
@@ -51,11 +107,40 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
         }
+        else
+        {
+
+            if (invincible)
+            {
+                if (collision.gameObject.CompareTag("enemy") || collision.gameObject.CompareTag("plane"))
+                {
+                    collision.transform.parent.GetComponent<StackController>().ShatterAllParts();
+                }
+            }
+            else
+            {
+                if (collision.gameObject.CompareTag("enemy"))
+                {
+                    collision.transform.parent.GetComponent<StackController>().ShatterAllParts();
+                }
+
+                if (collision.gameObject.CompareTag("plane"))
+                {
+                    Debug.Log("Game Over");
+                }
+            }
+
+        }
+
+        if (collision.gameObject.CompareTag("Finish") && state == PlayerState.Playing)
+        {
+            state = PlayerState.Finish;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (!smash)
+        if (!smash || collision.gameObject.CompareTag("Finish"))
         {
             rb.velocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
         }
