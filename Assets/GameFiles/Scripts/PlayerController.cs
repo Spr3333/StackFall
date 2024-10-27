@@ -20,7 +20,10 @@ public class PlayerController : MonoBehaviour
         Finish
     }
 
+    [HideInInspector]
     public PlayerState state = PlayerState.Preperation;
+
+    public AudioClip bounceClip, deadClip, winClip, destroyClip, iDestroyClip;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +34,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(state);
         if (state == PlayerState.Playing)
         {
             if (Input.GetMouseButtonDown(0))
@@ -69,6 +71,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        Debug.Log(invincible);
+
         if (state == PlayerState.Preperation)
         {
             if (Input.GetMouseButtonDown(0))
@@ -80,7 +84,7 @@ public class PlayerController : MonoBehaviour
         if (state == PlayerState.Finish)
         {
             if (Input.GetMouseButtonDown(0))
-                FindObjectOfType<LevelManager>().NextLevel();
+                GameObject.FindAnyObjectByType<LevelManager>().NextLevel();
         }
     }
 
@@ -91,21 +95,22 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 smash = true;
-                rb.velocity = new Vector3(0, -100 * Time.fixedDeltaTime * 7, 0);
+                rb.linearVelocity = new Vector3(0, -100 * Time.fixedDeltaTime * 7, 0);
             }
         }
 
-        if (rb.velocity.y > 5)
+        if (rb.linearVelocity.y > 5)
         {
-            rb.velocity = new Vector3(rb.velocity.x, 5, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 5, rb.linearVelocity.z);
         }
     }
-
+    #region Collison Check
     private void OnCollisionEnter(Collision collision)
     {
         if (!smash)
         {
-            rb.velocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
+            rb.linearVelocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
+            SoundManager.instance.PlaySoundFX(bounceClip, .6f);
         }
         else
         {
@@ -127,6 +132,8 @@ public class PlayerController : MonoBehaviour
                 if (collision.gameObject.CompareTag("plane"))
                 {
                     Debug.Log("Game Over");
+                    ScoreManager.instance.ResetScore();
+                    SoundManager.instance.PlaySoundFX(deadClip, .5f);
                 }
             }
 
@@ -135,6 +142,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Finish") && state == PlayerState.Playing)
         {
             state = PlayerState.Finish;
+            SoundManager.instance.PlaySoundFX(winClip, .7f);
         }
     }
 
@@ -142,7 +150,23 @@ public class PlayerController : MonoBehaviour
     {
         if (!smash || collision.gameObject.CompareTag("Finish"))
         {
-            rb.velocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
+            rb.linearVelocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
+        }
+    }
+    #endregion
+
+    public void IncreaseBrokenStacks()
+    {
+        if (!invincible)
+        {
+            ScoreManager.instance.AddScore(1);
+            SoundManager.instance.PlaySoundFX(destroyClip, .5f);
+        }
+        else
+        {
+            ScoreManager.instance.AddScore(2);
+            SoundManager.instance.PlaySoundFX(iDestroyClip, .5f);
+
         }
     }
 }

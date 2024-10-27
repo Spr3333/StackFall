@@ -9,8 +9,10 @@ public class StackController : MonoBehaviour
     public void ShatterAllParts()
     {
         if (transform.parent != null)
+        {
             transform.parent = null;
-
+            GameObject.FindAnyObjectByType<PlayerController>().IncreaseBrokenStacks();
+        }
         foreach (StackShatter item in stackPartColntrols)
         {
             item.Shatter();

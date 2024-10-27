@@ -35,7 +35,7 @@ public class StackShatter : MonoBehaviour
 
         rb.AddForceAtPosition(dir * force, forcePoint, ForceMode.Impulse);
         rb.AddTorque(Vector3.left * torque);
-        rb.velocity = Vector3.down;
+        rb.linearVelocity = Vector3.down;
 
     }
 
