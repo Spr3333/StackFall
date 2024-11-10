@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class PlayerController : MonoBehaviour
     private float currentTime;
 
     private bool smash, invincible;
+
+    private int currentBrokenStacks, totalStacks;
+
+    public GameObject invincibleObj;
+    public Image invincibleFill;
+    public ParticleSystem fireEffect;
 
     public enum PlayerState
     {
@@ -26,9 +33,15 @@ public class PlayerController : MonoBehaviour
     public AudioClip bounceClip, deadClip, winClip, destroyClip, iDestroyClip;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        currentBrokenStacks = 0;
+    }
+
+    private void Start()
+    {
+        totalStacks = FindObjectsOfType<StackController>().Length;
     }
 
     // Update is called once per frame
@@ -49,9 +62,16 @@ public class PlayerController : MonoBehaviour
             if (invincible)
             {
                 currentTime -= Time.deltaTime * .35f;
+                if (!fireEffect.gameObject.activeInHierarchy)
+                {
+                    fireEffect.gameObject.SetActive(true);
+                }
             }
             else
             {
+
+                if (fireEffect.gameObject.activeInHierarchy)
+                    fireEffect.gameObject.SetActive(false);
                 if (smash)
                     currentTime += Time.deltaTime * .8f;
                 else
@@ -59,19 +79,28 @@ public class PlayerController : MonoBehaviour
 
             }
 
+            if (currentTime >= .15f || invincibleFill.color == Color.red)
+                invincibleObj.SetActive(true);
+            else
+                invincibleObj.SetActive(false);
+
             if (currentTime >= 1)
             {
                 currentTime = 1;
                 invincible = true;
+                invincibleFill.color = Color.red;
             }
             else if (currentTime <= 0)
             {
                 currentTime = 0;
                 invincible = false;
+                invincibleFill.color = Color.white;
             }
+
+            if (invincibleObj.activeInHierarchy)
+                invincibleFill.fillAmount = currentTime / 1;
         }
 
-        Debug.Log(invincible);
 
         if (state == PlayerState.Preperation)
         {
@@ -139,6 +168,8 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        FindObjectOfType<GameUI>().LevelSliderFill(currentBrokenStacks / (float)totalStacks);
+
         if (collision.gameObject.CompareTag("Finish") && state == PlayerState.Playing)
         {
             state = PlayerState.Finish;
@@ -157,6 +188,7 @@ public class PlayerController : MonoBehaviour
 
     public void IncreaseBrokenStacks()
     {
+        currentBrokenStacks++;
         if (!invincible)
         {
             ScoreManager.instance.AddScore(1);
