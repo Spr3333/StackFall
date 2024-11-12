@@ -17,7 +17,12 @@ public class PlayerController : MonoBehaviour
 
     public GameObject invincibleObj;
     public Image invincibleFill;
+
+    [Header("Effects")]
     public ParticleSystem fireEffect;
+    public ParticleSystem winEffect;
+    public GameObject splashEffect;
+    public float splashYOffset = .22f;
 
     public enum PlayerState
     {
@@ -101,15 +106,6 @@ public class PlayerController : MonoBehaviour
                 invincibleFill.fillAmount = currentTime / 1;
         }
 
-
-        if (state == PlayerState.Preperation)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                state = PlayerState.Playing;
-            }
-        }
-
         if (state == PlayerState.Finish)
         {
             if (Input.GetMouseButtonDown(0))
@@ -139,6 +135,19 @@ public class PlayerController : MonoBehaviour
         if (!smash)
         {
             rb.linearVelocity = new Vector3(0, 50 * Time.fixedDeltaTime * 5, 0);
+
+            if (!collision.gameObject.CompareTag("Finish"))
+            {
+                GameObject splash = Instantiate(splashEffect);
+                splash.gameObject.transform.SetParent(collision.transform);
+                splash.transform.localEulerAngles = new Vector3(90, Random.Range(0, 359), 0);
+
+                float randomScale = Random.Range(.18f, .25f);
+                splash.transform.localScale = new Vector3(randomScale, randomScale, 1);
+                splash.transform.position = new Vector3(transform.position.x, transform.position.y - splashYOffset, transform.position.z);
+                splash.GetComponent<SpriteRenderer>().color = transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+            }
+
             SoundManager.instance.PlaySoundFX(bounceClip, .6f);
         }
         else
@@ -160,8 +169,10 @@ public class PlayerController : MonoBehaviour
 
                 if (collision.gameObject.CompareTag("plane"))
                 {
-                    Debug.Log("Game Over");
-                    ScoreManager.instance.ResetScore();
+                    rb.isKinematic = true;
+                    transform.GetChild(0).gameObject.SetActive(false);
+                    state = PlayerState.Dead;
+                    //ScoreManager.instance.ResetScore();
                     SoundManager.instance.PlaySoundFX(deadClip, .5f);
                 }
             }
@@ -174,6 +185,10 @@ public class PlayerController : MonoBehaviour
         {
             state = PlayerState.Finish;
             SoundManager.instance.PlaySoundFX(winClip, .7f);
+            GameObject win = Instantiate(winEffect.gameObject);
+            win.transform.SetParent(Camera.main.transform);
+            win.transform.localPosition = Vector3.up * 1.5f;
+            win.transform.eulerAngles = Vector3.zero;
         }
     }
 

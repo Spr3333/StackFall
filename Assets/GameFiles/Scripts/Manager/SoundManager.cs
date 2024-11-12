@@ -20,6 +20,11 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    public void SoundOnOFF()
+    {
+        sound = !sound;
+    }
+
     public void PlaySoundFX(AudioClip clip, float volume)
     {
         if (sound)
